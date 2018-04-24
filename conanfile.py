@@ -53,3 +53,5 @@ class DyadConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
+        if self.settins.os == "Windows":
+            self.cpp_info.libs.append("ws2_32")

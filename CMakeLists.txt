@@ -11,6 +11,9 @@ include(conanbuildinfo.cmake)
 conan_basic_setup()
 
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/source_subfolder/src)
+if (WIN32 AND MSVC AND BUILD_SHARED_LIBS)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif (WIN32 AND MSVC AND BUILD_SHARED_LIBS)
 
 add_library(${CMAKE_PROJECT_NAME} ${SOURCE_DIR}/dyad.c ${SOURCE_DIR}/dyad.h)
 set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY C_STANDARD 99)
