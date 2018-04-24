@@ -1,7 +1,28 @@
-cmake_minimum_required(VERSION 2.8.11)
-project(cmake_wrapper)
+cmake_minimum_required(VERSION 2.8)
+project(dyad C)
+
+set (DYAD_VERSION_MAJOR 0)
+set (DYAD_VERSION_MINOR 2)
+set (DYAD_VERSION_PATCH 1)
+
+set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
 include(conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_subdirectory("source_subfolder")
+set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/source_subfolder/src)
+
+add_library(${CMAKE_PROJECT_NAME} ${SOURCE_DIR}/dyad.c ${SOURCE_DIR}/dyad.h)
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY C_STANDARD 99)
+
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall -Wextra -Werror -pedantic)
+endif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+
+install(TARGETS ${CMAKE_PROJECT_NAME}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
+
+install(FILES ${SOURCE_DIR}/dyad.h DESTINATION include
+        PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ)
