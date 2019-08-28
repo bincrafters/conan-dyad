@@ -17,9 +17,9 @@ class DyadConan(ConanFile):
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = "shared=False", "fPIC=True"
-    source_subfolder = "source_subfolder"
-    build_subfolder = "build_subfolder"
+    default_options = {'shared': False, 'fPIC': True}
+    _source_subfolder = "source_subfolder"
+    _build_subfolder = "build_subfolder"
     commit_id = "915ae4939529b9aaaf6ebfd2f65c6cff45fc0eac"
 
     def config_options(self):
@@ -33,22 +33,22 @@ class DyadConan(ConanFile):
         source_url = "https://github.com/rxi/dyad"
         tools.get("{0}/archive/{1}.tar.gz".format(source_url, self.commit_id))
         extracted_dir = self.name + "-" + self.commit_id
-        os.rename(extracted_dir, self.source_subfolder)
+        os.rename(extracted_dir, self._source_subfolder)
 
-    def configure_cmake(self):
+    def _configure_cmake(self):
         cmake = CMake(self)
         if self.settings.os != 'Windows':
             cmake.definitions['CMAKE_POSITION_INDEPENDENT_CODE'] = self.options.fPIC
-        cmake.configure(build_folder=self.build_subfolder)
+        cmake.configure(build_folder=self._build_subfolder)
         return cmake
 
     def build(self):
-        cmake = self.configure_cmake()
+        cmake = self._configure_cmake()
         cmake.build()
 
     def package(self):
-        self.copy(pattern="LICENSE", dst="license", src=self.source_subfolder)
-        cmake = self.configure_cmake()
+        self.copy(pattern="LICENSE", dst="license", src=self._source_subfolder)
+        cmake = self._configure_cmake()
         cmake.install()
 
     def package_info(self):
