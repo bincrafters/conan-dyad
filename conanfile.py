@@ -9,7 +9,6 @@ class DyadConan(ConanFile):
     url = "https://github.com/bincrafters/conan-dyad"
     homepage = "https://github.com/rxi/dyad"
     license = "MIT"
-    exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
