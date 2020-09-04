@@ -5,7 +5,6 @@ set (DYAD_VERSION_MAJOR 0)
 set (DYAD_VERSION_MINOR 2)
 set (DYAD_VERSION_PATCH 1)
 
-set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
 include(conanbuildinfo.cmake)
 conan_basic_setup()
