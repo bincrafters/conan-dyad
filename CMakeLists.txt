@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.4)
 project(dyad C)
 
 set (DYAD_VERSION_MAJOR 0)
